@@ -6,7 +6,7 @@ suppressPackageStartupMessages(source("gen_data.R"))
 # @burn: number of samples to be considered as burn-in
 # @thin: thinning factor of the MCMC samples
 posterior_est <- function(data, m = 10, n_iterations = 1000, burn = 500, thin = 1){
-  if(burn <= n_iterations){
+  if(burn >= n_iterations){
     stop("Number of iterations is less than number of burn-in")
   }
   dataa <- data$data
