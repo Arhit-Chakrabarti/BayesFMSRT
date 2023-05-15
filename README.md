@@ -1,10 +1,9 @@
 Bayesian Flexible Modelling of Spatially Resolved Transcriptomic Data
 ================
-Arhit Chakrabarti
 
 ## Tutorial
 
-We use the function *generate_data* to simulate matrix-variate spatial
+We use the function **generate_data** to simulate matrix-variate spatial
 data. Sourcing the \`\`**BayesSRT_func.R**” file sources all necessary
 functions. We first simulate data from a matrix-variate normal
 distribution with 100 randomly generated spatial locations from
