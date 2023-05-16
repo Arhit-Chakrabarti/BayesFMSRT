@@ -1,27 +1,33 @@
 Bayesian Flexible Modelling of Spatially Resolved Transcriptomic Data
 ================
 
-## Tutorial
+## Single-Sample simulation
 
-We use the function **generate_data** to simulate matrix-variate spatial
-data. Sourcing the \`\`**BayesSRT_func.R**” file sources all necessary
-functions. We first simulate data from a matrix-variate normal
-distribution with 100 randomly generated spatial locations from
-$Uni(0,1)$ and 20 rows (genes). The true spatial covariance matrix is
-generated from a Matern kernel with smoothness $0.5$, range $1.5$ and
-marginal variance $1$. The true scale matrix $\Psi$ is generated from an
-AR structure i.e., with $\Psi_{i,j}= \rho^{|i - j|}$ where $\rho = 0.5$.
+In this repository, we have a set of functions to simulate data from a
+single matrix-variate normal distribution and run our proposed Blocked
+Gibbs Sampling algorithm. We use the function **generate_data** to
+simulate matrix-variate spatial data. Sourcing the **BayesSRT_func.R**
+file sources all necessary functions.
+
+For the purpose of illustration, we first simulate data from a
+matrix-variate normal distribution with 200 randomly generated spatial
+locations from the distribution, $Uni(0,1)$ and 20 rows (corresponding
+to genes in spatial transcriptomic data). The true spatial covariance
+matrix is generated from a Matern kernel with smoothness $0.5$, range
+$1.5$ and marginal variance $1$. The true scale matrix $\Psi$ is
+generated from an AR structure i.e., with $\Psi_{i,j}= \rho^{|i - j|}$
+where $\rho = 0.5$.
 
 ``` r
 # First source the function BayesSRT_func.R file, which loads all the relevant 
 # R functions (both custom functions and inbuilt functions)
 suppressPackageStartupMessages(source("BayesSRT_func.R"))
-datum <- generate_data(n_locs = 100, num_reps = 20, range = 1.5)
+datum <- generate_data(n_locs = 200, num_reps = 20, range = 1.5)
 ```
 
 ## Running the proposed MCMC algorithm
 
-We run our proposed Blocked Gibbs sampler for 1000 iterations and
+We run our proposed Blocked Gibbs sampler for 2000 iterations and
 consider first 500 samples as burn-in. We do not consider any thinning
 of the samples. We plot the traceplot of log-likelihood for each of the
 posterior samples from our sampler and the corresponding
@@ -29,7 +35,25 @@ auto-correlation plot. We overlay the traceplot of log-likelihood with
 the true value of the log-likelihood.
 
 ``` r
-Blocked.MCMC = posterior_est(data = datum, n_iterations = 1000, burn = 500, thin = 1)
+Blocked.MCMC = posterior_est(data = datum, n_iterations = 2000, burn = 500, thin = 1)
 ```
 
 ![](README_files/figure-gfm/plots-1.png)<!-- -->
+
+## Multi-Sample simulation
+
+We also provide the code for performing simulations for the multi-sample
+case. The associated R code is **simulation_replicates.R**. For
+simplicity, we are not reproducing the simulations in the README.
+
+## Real Data Analysis
+
+The STARmap data used for the real data analysis can be found in the
+folder **STARmap**. The folder **Real Data Application** has the code
+**DataGeneration.R** which produces the analysis data from the STARmap
+datasets, which are also included in the same folder. The R file
+**BGS.R** runs the proposed Blocked Gibbs Sampler for the STARmap data.
+**LL_Correlation.R** file calculates the posterior log-likelihood values
+using the output from the **BGS.R** file. The **Analysis.R** file has
+the relevant codes used for generating all the exploratory plots and
+analysis relevant to the multi-sample real data analysis section.
