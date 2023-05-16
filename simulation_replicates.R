@@ -92,7 +92,7 @@ nearest_neighbors3 <- find_nn_dist(fields::rdist(locs3), n_locs3)
 n_iterations = 1000 # Number of iterations
 
 
-source("~/BayesFMSRT/functions_replicates.R") 
+source("functions_replicates.R") 
 #####################################################################################################
 # My method
 #####################################################################################################
